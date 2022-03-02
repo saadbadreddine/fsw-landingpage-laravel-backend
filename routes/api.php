@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\MessageController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,7 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+Route::post('/contact-us', [MessageController::class, 'store']);
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
