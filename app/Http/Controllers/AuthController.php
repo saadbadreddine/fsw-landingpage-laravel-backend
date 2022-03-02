@@ -62,6 +62,38 @@ class AuthController extends Controller
         ], 201);
     }
 
+
+    public function updateProfile(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'name'      =>  'min:2|max:45|unique:users,id,' . $request->user()->id,
+                'email'     =>  'string|email|max:100|unique:users,id,' . $request->user()->id,
+                'password'  =>  'string|min:6|unique:users,id,' . $request->user()->id,
+            ]);
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            } else {
+
+                $user = User::find($request->user()->id);
+                if ($request->name) {
+                    $user->name     =   $request->name;
+                }
+                if ($request->email) {
+                    $user->email    =   $request->email;
+                }
+                if ($request->password) {
+                    $user->password =   bcrypt($request->password);
+                }
+
+                $user->update();
+                return response()->json(['status' => 'true', 'message']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'false', "message" => $e->getMessage(), 'data' => []], 500);
+        }
+    }
+
     /**
      * Log the user out (Invalidate the token).
      *
