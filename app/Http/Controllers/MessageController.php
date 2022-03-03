@@ -41,15 +41,6 @@ class MessageController extends Controller
                 'message' => 'Message successfully sent',
             ], 201);
 
-            /*
-            $data = $request->all();
-
-            $message = new Message;
-            $message->email = $data["email"];
-            $message->subject = $data["subject"];
-            $message->message = $data["message"];
-            $message->save();
-            */
         }
     }
 
